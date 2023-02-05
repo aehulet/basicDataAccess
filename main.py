@@ -6,7 +6,12 @@ import spql, parse
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings
 
 # parse.findsub()
-spql.test_wikidata()
+# result_dict = spql.get_query(spql.LOAD_BASE)
+# print(spql.load_base(spql.get_wd_query(spql.LOAD_BASE)))
+result_dict = spql.get_wd_query(spql.query_item_detail("Q116341990"))
+print(spql.load_item_detail(result_dict))
+# print(spql.get_wd_query(spql.query_item_detail("Q116341990")))
+
 # xmlPractice.get_attribute()
 # xmlPractice.write_values()
 # xmlPractice.remove_element()
