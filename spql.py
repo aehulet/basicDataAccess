@@ -1,6 +1,6 @@
 # pip install sparqlwrapper
 # https://rdflib.github.io/sparqlwrapper/
-
+import re
 from SPARQLWrapper import SPARQLWrapper, XML, JSON
 
 endpoint = "https://query.wikidata.org/sparql"
@@ -18,7 +18,7 @@ UNION
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }  
 }
 ORDER BY ?categoryLabel
-LIMIT 10"""
+"""
 
 sample_query = """select distinct ?academicLabel ?deptLabel ?studyAreaLabel ?worksLabel
 where {
@@ -44,10 +44,12 @@ def test_wikidata():
     sparql.setQuery(LOAD_BASE)
     sparql.setReturnFormat(JSON)
     the_set = sparql.query().convert()
-
+    clean_result = {}
     for r in the_set["results"]["bindings"]:
         topic = r.get("topic", {}).get("value")
-        topic = topic.right()
+        topic_split = re.split(r'\/', topic)
+        topic_key = topic_split.pop()
         topic_label = r.get("topicLabel", {}).get("value")
         categLabel = r.get("categoryLabel", {}).get("value")
-        print(topic + " |", topic_label + " |", categLabel)
+
+        print(topic_key + " |", topic_label + " |", categLabel)
