@@ -1,9 +1,25 @@
 # pip install sparqlwrapper
 # https://rdflib.github.io/sparqlwrapper/
 
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, XML, JSON
 
 endpoint = "https://query.wikidata.org/sparql"
+LOAD_BASE = """select ?topic ?topicLabel ?categoryLabel
+where {
+  {
+   ?topic wdt:P485 wd:Q96156694 .
+    ?topic wdt:P31 ?category .
+  }  
+UNION 
+  {
+    ?topic wdt:P485 wd:Q73644758 .
+    ?topic wdt:P31 ?category .
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }  
+}
+ORDER BY ?categoryLabel
+LIMIT 10"""
+
 sample_query = """select distinct ?academicLabel ?deptLabel ?studyAreaLabel ?worksLabel
 where {
   VALUES ?employer {wd:Q913861} .
@@ -25,9 +41,13 @@ def test_wikidata():
     user_agent = 'PySparqlTest/0.0 (https://linkedin.com/andre_hulet; andrehulet@gmail.com)'
     # adjust user agent; see https://w.wiki/CX6
     sparql = SPARQLWrapper(endpoint, agent=user_agent)
-    sparql.setQuery(sample_query)
+    sparql.setQuery(LOAD_BASE)
     sparql.setReturnFormat(JSON)
     the_set = sparql.query().convert()
 
-    for result in the_set["results"]["bindings"]:
-        print(result)
+    for r in the_set["results"]["bindings"]:
+        topic = r.get("topic", {}).get("value")
+        topic = topic.right()
+        topic_label = r.get("topicLabel", {}).get("value")
+        categLabel = r.get("categoryLabel", {}).get("value")
+        print(topic + " |", topic_label + " |", categLabel)

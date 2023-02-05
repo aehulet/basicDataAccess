@@ -1,11 +1,11 @@
 # This is a sample Python script.
 import dbFuncts
 import xmlPractice
-import sparql
+import spql
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings
 
-sparql.test_wikidata()
+spql.test_wikidata()
 # xmlPractice.get_attribute()
 # xmlPractice.write_values()
 # xmlPractice.remove_element()
