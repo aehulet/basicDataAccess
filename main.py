@@ -8,8 +8,15 @@ import spql, parse
 # parse.findsub()
 # result_dict = spql.get_query(spql.LOAD_BASE)
 # print(spql.load_base(spql.get_wd_query(spql.LOAD_BASE)))
-result_dict = spql.get_wd_query(spql.query_item_detail("Q116341990"))
-print(spql.load_item_detail(result_dict))
+# qrystr = spql.query_item_detail("Q116341990")
+# print(qrystr)
+# result = spql.get_wd_query(qrystr)
+# print(result)
+# print(spql.load_item_detail(result))
+import testy
+m = testy.EmTee
+print(testy.goofy(5))
+
 # print(spql.get_wd_query(spql.query_item_detail("Q116341990")))
 
 # xmlPractice.get_attribute()
