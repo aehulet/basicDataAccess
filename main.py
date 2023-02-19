@@ -15,7 +15,7 @@ import spql, parse
 # print(spql.load_item_detail(result))
 import testy
 m = testy.EmTee
-print(testy.goofy(5))
+print(testy.goofy(0))
 
 # print(spql.get_wd_query(spql.query_item_detail("Q116341990")))
 

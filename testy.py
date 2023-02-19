@@ -1,16 +1,15 @@
 import sys
+import datetime
 
 
 def goofy(num):
-    the_args = []
     try:
         result = 1 / num
-    except TypeError as t:
-        for a in t.args:
-            the_args.append(a)  # sys.exc_info()
-        return the_args
-    except ZeroDivisionError as d:
-        return 'divided by zero!'
+    except:
+        cls, funct, tb = sys.exc_info()
+        dt = datetime.datetime.now()
+        err_info = [cls, funct, 'testy.goofy', dt.isoformat()]  # exclude traceback address from exc_info
+        return err_info
     else:
         return result
 
